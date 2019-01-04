@@ -5,7 +5,7 @@
 			
 			dd
 				ol.list-unstyled
-					li(is="day", v-for="(day, j) in month", :key="[2019, (i+1), (j+1)].join('-')")
+					li(is="day", v-for="(day, j) in month.flat()", :key="[2019, (i+1), (j+1)].join('-')")
 						span.data__day {{ LOOKUP.DAY[day].slice(0,3) }}
 						span.data__day-index {{ day }}
 						span.data__date {{ j+1 }}
