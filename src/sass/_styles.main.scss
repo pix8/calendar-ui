@@ -1,0 +1,120 @@
+/*
+*	Compressed and generated using grunt.js sass/compress build tools
+*
+*	@title: 	styles.main.scss (partial)
+* 	@project: 	
+* 	@author: 	Jonathan Brincat@pix8.co.uk, <jonathan@pix8.co.uk>
+**/
+@charset "UTF-8";
+
+//devnote: in future, can use viewport units instead of troublesome height 100%
+
+/* =============================================================================
+	Core
+	========================================================================== */
+html, body {
+	background: #FFF none;
+}
+
+html {
+}
+
+body{
+}
+
+/* =============================================================================
+	Masthead
+	========================================================================== */
+#app--masthead {
+}
+
+/* ========================================= Primary navigation */
+#primary--nav{
+}
+
+/* =============================================================================
+	Footer(Site/app)
+	========================================================================== */
+#app--footer{
+}
+
+/* =============================================================================
+	Page
+	========================================================================== */
+#app--page{
+	main {
+	}
+}
+
+/* ========================================= Page > banner */
+#app--banner{
+}
+
+/* ========================================= Page > content */
+#app--content{
+}
+	main {
+	}
+
+/* ========================================= Page > content > hero */
+
+/* ========================================= <project> */
+html, body {
+	height: 100%;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	//overflow: hidden;
+	min-height: 100%;
+}
+
+#app--masthead {
+}
+
+#app--main {
+	padding: 10px 10px 10px 60px;
+	flex-grow: 1;
+}
+
+#app--footer {
+	background-color: $color__pink;
+	color: $color__white;
+
+	a {
+		color: $color__white;
+	}
+}
+
+.container {
+	width: auto !important;
+}
+
+p code {
+	font-style: italic;
+}
+
+.foobar {
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	text-align: center;
+}
+
+.instructions {
+	li {
+		margin: 10px 0;
+	}
+}
+
+.ui__logo-grid {
+	margin-top: 60px;
+	margin-bottom: 60px;
+}
+
+.grid__logo {
+	width: 140px;
+	max-height: 140px;
+	margin: 20px;
+}

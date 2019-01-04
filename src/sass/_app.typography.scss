@@ -1,0 +1,32 @@
+/*
+*	Compressed and generated using grunt.js sass/compress build tools
+*
+*	@title: 	app.typography.scss (partial)
+* 	@project: 	Lakeside Service Centre
+* 	@author: 	Jonathan Brincat@pix8.co.uk, <jonathan@pix8.co.uk>
+**/
+
+@charset "UTF-8";
+
+@mixin font-size($value) {
+	font-size: ($value / ($value * 0 + 1)) * 10 + px; // <ie9
+	font-size: $value / ($value * 0 + 1) + rem;
+}
+
+// 	eot 		--------- 	 	>ie5
+// 	woff 		--------- 	 	webkit(chrome), firefox, opera, >ie8, ios, android, blackberry, ie mobile
+// 	ttf/otf 	--------- 	 	webkit, firefox, opera(>15), ios, android, blackberry
+// 	svg 		--------- 		webkit(safari), opera, ios, android, blackberry
+
+// 	200			--------- 		extralight
+// 	300			--------- 		light
+// 	400 		--------- 		regular
+// 	500 		--------- 		medium
+// 	600			--------- 		semibold
+// 	700			--------- 		bold
+// 	800			--------- 		extrabold
+
+/* =============================================================================
+	Metrophobic (main)
+	========================================================================== */
+$regular:                   verdana, helvetica, clean, sans-serif;
