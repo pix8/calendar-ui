@@ -41,6 +41,7 @@ export default {
 		flex-basis: (100%/7);
 		margin: 0;
 		text-align: center;
+		font-size: 9px;
 
 		/*display: block;
 		float: left;

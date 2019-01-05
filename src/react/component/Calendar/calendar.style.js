@@ -2,15 +2,18 @@ import styled from 'styled-components'
 
 
 const StyledCalendar = styled.div`
+	background: whitesmoke;
 	display: flex;
 	flex-wrap: wrap;
 `;
 
 const StyledMonth = styled.dl`
 	flex-basis: auto;
-	background: gold;
-	width: 28%;
-	margin: 20px;
+	width: 25%;
+	padding-left: 20px;
+	padding-right: 20px;
+	margin-top: 0;
+	margin-bottom: 0;
 `;
 
 const StyledDay = styled.li`

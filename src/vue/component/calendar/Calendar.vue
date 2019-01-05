@@ -2,7 +2,27 @@
 	.calendar
 		dl.calendar__month(v-for="(month, i) in render", :index="i", :key="i")
 			dt {{ LOOKUP.MONTH[i] }} ({{ i }})
-			
+
+			dd
+				ol.list-unstyled
+					template(v-for="(week, j) in month")
+						template(v-if="week.length < 7")
+							template(v-if="week[0] > 0")
+								li(is="day", v-for="(day, k) in [...Array(7-week.length).fill(null)].concat(week)", :key="[2019, (i+1), (j+1), (k+1)].join('-')")
+									span.data__day(v-if="day !== null") {{ LOOKUP.DAY[day].slice(0,3) }}
+									span.data__day-index(v-if="day !== null") {{ day }}
+									span.data__date(v-if="day !== null") {{ j }}
+							template(v-else)
+								li(is="day", v-for="(day, k) in week.concat([...Array(7-week.length).fill(null)])", :key="[2019, (i+1), (j+1), (k+1)].join('-')")
+									span.data__day(v-if="day !== null") {{ LOOKUP.DAY[day].slice(0,3) }}
+									span.data__day-index(v-if="day !== null") {{ day }}
+									span.data__date(v-if="day !== null") {{ j }}
+						template(v-else)
+							li(is="day", v-for="(day, k) in week", :key="[2019, (i+1), (j+1), (k+1)].join('-')")
+								span.data__day {{ LOOKUP.DAY[day].slice(0,3) }}
+								span.data__day-index {{ day }}
+								span.data__date {{ j }}
+		//- REDUNDANT
 			dd
 				ol.list-unstyled
 					li(is="day", v-for="(day, j) in month.flat()", :key="[2019, (i+1), (j+1)].join('-')")
@@ -75,18 +95,22 @@ export default {
 		background: whitesmoke;
 
 		.calendar {
+			background: whitesmoke;
 			display: flex;
 			flex-wrap: wrap;
 		}
 
 		.calendar__month {
 			flex-basis: auto;
-			background: gold;
-			width: 28%;
-			margin: 20px;
+			width: 25%;
+			padding-left: 20px;
+			padding-right: 20px;
+			margin-top: 0;
+			margin-bottom: 0;
 
 			dt {
-				font-size: 20px;
+				font-size: 14px;
+				font-weight: 700;
 			}
 
 			dd {
