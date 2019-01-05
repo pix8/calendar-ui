@@ -27,7 +27,7 @@ export default class Calendar extends Component {
 
 		this.calendar = new CalendarService();
 
-		console.log(LOOKUP)
+		//console.log(LOOKUP)
 
 		this.state = {
 			apiCalendar: []
@@ -37,8 +37,6 @@ export default class Calendar extends Component {
 	componentWillMount() {
 		this.calendar.getYear( this.props.epoch )
 			.then( (data) => {
-				//decision = begin week by which day?
-				//then = pad array to construct month view to suit
 
 				//ACTION: nest/organise days within each month by weeks
 					// - it is the nesting in arrays that infer meaning - this maintain continuity as a system to group the non-base10 numbering systems(month/12, week/7) into a common base10 wrapper i.e. year - year, month, week 
@@ -69,7 +67,63 @@ export default class Calendar extends Component {
 								<dd>
 									<ol className="list-unstyled">
 										{
-											month.flat().map((day, j, arr) => {
+											month.map((week, k, arr) => {
+
+												if(week.length < 7) {
+
+													if(week[0] > 0) {
+														return (
+															<li style={ {width: '100%', display: 'flex'} } key={ k }>
+																{ /*<p>prepend = { 7-week.length }</p>*/ }
+																
+																{
+																	[...Array(7-week.length).fill(null)].concat(week).map( (day, m, arr) => {
+																		return (
+																			<div className="calendar__date" key={ m }>
+																				{ day !== null ? <span className="data__day">{ LOOKUP.DAY[day].slice(0,3) }</span> : null }
+																				{ day !== null ? <span className="data__day-index">{ day }</span> : null }
+																				{ day !== null ? <span className="data__date">{ k }, { m }</span> : null }
+																			</div>
+																		)
+																	})
+																}
+															</li>
+														)
+													}
+													return (
+														<li style={ {width: '100%', display: 'flex'} } key={ k }>
+															{
+																week.concat([...Array(7-week.length).fill(null)]).map( (day, m, arr) => {
+																	return (
+																		<div className="calendar__date" key={ m }>
+																			{ day !== null ? <span className="data__day">{ LOOKUP.DAY[day].slice(0,3) }</span> : null}
+																			{ day !== null ? <span className="data__day-index">{ day }</span> : null }
+																			{ day !== null ? <span className="data__date">{ k }, { m }</span> : null }
+																		</div>
+																	)
+																})
+															}
+
+															{ /*<p>append = { 7-week.length }</p>*/ }
+														</li>
+													)
+												}
+												return (
+													week.map( (day, m, arr) => {
+														return (
+															<li className="calendar__date" key={ m }>
+																<span className="data__day">{ LOOKUP.DAY[day].slice(0,3) }</span>
+																<span className="data__day-index">{ day }</span>
+																<span className="data__date">{ k }, { m }</span>
+															</li>
+														)
+													})
+												)
+											})
+										}
+
+										{
+											/*month.flat().map((day, j, arr) => {
 												return (
 													<StyledDay className="calendar__date" key={ [2019, (i+1), (j+1)].join('-') }>
 														<span className="data__day">{ LOOKUP.DAY[day].slice(0,3) }</span>
@@ -77,7 +131,7 @@ export default class Calendar extends Component {
 														<span className="data__date">{ j+1 }</span>
 													</StyledDay>
 												)
-											})
+											})*/
 										}
 									</ol>
 								</dd>
