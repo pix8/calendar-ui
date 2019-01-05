@@ -4,7 +4,7 @@
 			.outer-wrapper
 				h2 Vue Calendar 2019
 
-				calendar(:epoch="new Date().toISOString()")
+				calendar(:epoch="new Date().toISOString()" v-cloak)
 </template>
 
 <script>
@@ -31,3 +31,8 @@ export default {
 	methods: {}
 }
 </script>
+
+<style lang="scss" scoped>
+	[v-cloak] > * { display:none }
+	[v-cloak]::before { content: "loading…" }
+</style>

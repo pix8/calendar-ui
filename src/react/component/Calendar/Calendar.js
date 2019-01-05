@@ -19,6 +19,7 @@ const LOOKUP = {
 }
 
 
+//console.log("-- 1. REACT:CALENDAR component initialised -- ");
 /*********************************************************************************************/
 export default class Calendar extends Component {
 
@@ -123,8 +124,6 @@ export default class Calendar extends Component {
 								</dd>
 							</StyledMonth>
 						)
-
-						/*return <Month data={item} key={i} />;*/
 					})
 				}
 			</StyledCalendar>
