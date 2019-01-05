@@ -17,7 +17,7 @@ export default class App extends Component {
 			<div id="app-react">
 				<div id="pix8--calendar" className="ui__calendar">
 					<div className="outer-wrapper">
-						<h2>React Calendar</h2>
+						<h2>React Calendar 2019</h2>
 						
 						<Calendar epoch={ new Date().toISOString() } />
 					</div>

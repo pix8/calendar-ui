@@ -35,6 +35,7 @@ export default class Calendar extends Component {
 	componentWillMount() {
 		this.calendar.getYear( this.props.epoch )
 			.then( (data) => {
+				console.log(data)
 				this.setState({
 					apiCalendar: this.state.apiCalendar.concat(data)
 				});
@@ -49,7 +50,7 @@ export default class Calendar extends Component {
 
 						return (
 							<StyledMonth className="calendar__month" key={ i }>
-								<dt>{ LOOKUP.MONTH[i] } ({ i })</dt>
+								<dt>{ LOOKUP.MONTH[i] }</dt>
 
 								<dd>
 									<ol className="list-unstyled">
@@ -64,8 +65,7 @@ export default class Calendar extends Component {
 																return (
 																	<li className="calendar__date" key={ k }>
 																		{ day !== null ? <span className="data__day">{ LOOKUP.DAY[day].slice(0,3) }</span> : null }
-																		{ day !== null ? <span className="data__day-index">{ day }</span> : null }
-																		{ day !== null ? <span className="data__date">{ j }</span> : null }
+																		{ day !== null ? <span className="data__date">{ (k+1)+(j*7)-(7-month[0].length) }</span> : null }
 																	</li>
 																)
 															})
@@ -76,8 +76,7 @@ export default class Calendar extends Component {
 															return (
 																<li className="calendar__date" key={ k }>
 																	{ day !== null ? <span className="data__day">{ LOOKUP.DAY[day].slice(0,3) }</span> : null}
-																	{ day !== null ? <span className="data__day-index">{ day }</span> : null }
-																	{ day !== null ? <span className="data__date">{ j }</span> : null }
+																	{ day !== null ? <span className="data__date">{ (k+1)+(j*7)-(7-month[0].length) }</span> : null }
 																</li>
 															)
 														})
@@ -88,8 +87,7 @@ export default class Calendar extends Component {
 														return (
 															<li className="calendar__date" key={ k }>
 																<span className="data__day">{ LOOKUP.DAY[day].slice(0,3) }</span>
-																<span className="data__day-index">{ day }</span>
-																<span className="data__date">{ j }</span>
+																<span className="data__date">{ (k+1)+(j*7)-(7-month[0].length) }</span>
 															</li>
 														)
 													})

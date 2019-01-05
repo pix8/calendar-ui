@@ -2,7 +2,7 @@
 	#app--vue
 		#pix8--calendar.ui__calendar
 			.outer-wrapper
-				h2 Vue Calendar
+				h2 Vue Calendar 2019
 
 				calendar(:epoch="new Date().toISOString()")
 </template>

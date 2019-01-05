@@ -1,7 +1,7 @@
 <template lang="pug">
 	.calendar
 		dl.calendar__month(v-for="(month, i) in render", :index="i", :key="i")
-			dt {{ LOOKUP.MONTH[i] }} ({{ i }})
+			dt {{ LOOKUP.MONTH[i] }}
 
 			dd
 				ol.list-unstyled
@@ -10,18 +10,15 @@
 							template(v-if="week[0] > 0")
 								li(is="day", v-for="(day, k) in [...Array(7-week.length).fill(null)].concat(week)", :key="[2019, (i+1), (j+1), (k+1)].join('-')")
 									span.data__day(v-if="day !== null") {{ LOOKUP.DAY[day].slice(0,3) }}
-									span.data__day-index(v-if="day !== null") {{ day }}
-									span.data__date(v-if="day !== null") {{ j }}
+									span.data__date(v-if="day !== null") {{ (k+1)+(j*7)-(7-month[0].length) }}
 							template(v-else)
 								li(is="day", v-for="(day, k) in week.concat([...Array(7-week.length).fill(null)])", :key="[2019, (i+1), (j+1), (k+1)].join('-')")
 									span.data__day(v-if="day !== null") {{ LOOKUP.DAY[day].slice(0,3) }}
-									span.data__day-index(v-if="day !== null") {{ day }}
-									span.data__date(v-if="day !== null") {{ j }}
+									span.data__date(v-if="day !== null") {{ (k+1)+(j*7)-(7-month[0].length) }}
 						template(v-else)
 							li(is="day", v-for="(day, k) in week", :key="[2019, (i+1), (j+1), (k+1)].join('-')")
 								span.data__day {{ LOOKUP.DAY[day].slice(0,3) }}
-								span.data__day-index {{ day }}
-								span.data__date {{ j }}
+								span.data__date {{ (k+1)+(j*7)-(7-month[0].length) }}
 		//- REDUNDANT
 			dd
 				ol.list-unstyled
