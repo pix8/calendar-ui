@@ -5,6 +5,26 @@
 		flex-wrap: wrap;
 	}*/
 
+	a {
+		display: block;
+		color: inherit;
+		width: 34px;
+		height: 34px;
+		padding: 5px;
+		transition: all 200ms;
+
+		//DEVNOTE: use psuedo element for border-radius to avoid conflict with :hover hotspot
+		border-radius: 50%;
+
+		&:hover,
+		&:focus {
+			background: rgba(236,0,140, 1);
+			color: white;
+			text-decoration: none;
+			transition: none;
+		}
+	}
+
 	.calendar__month {
 		/*flex-basis: auto;
 		width: 20%;

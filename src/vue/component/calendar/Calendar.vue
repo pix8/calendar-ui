@@ -9,16 +9,19 @@
 						template(v-if="week.length < 7")
 							template(v-if="week[0] > 0")
 								li(is="day", v-for="(day, k) in [...Array(7-week.length).fill(null)].concat(week)", :key="[2019, (i+1), (j+1), (k+1)].join('-')")
-									span.data__day(v-if="day !== null") {{ LOOKUP.DAY[day].slice(0,3) }}
-									span.data__date(v-if="day !== null") {{ (k+1)+(j*7)-(7-month[0].length) }}
+									a(v-if="day !== null" href="")
+										span.data__day {{ LOOKUP.DAY[day].slice(0,3) }}
+										span.data__date {{ (k+1)+(j*7)-(7-month[0].length) }}
 							template(v-else)
 								li(is="day", v-for="(day, k) in week.concat([...Array(7-week.length).fill(null)])", :key="[2019, (i+1), (j+1), (k+1)].join('-')")
-									span.data__day(v-if="day !== null") {{ LOOKUP.DAY[day].slice(0,3) }}
-									span.data__date(v-if="day !== null") {{ (k+1)+(j*7)-(7-month[0].length) }}
+									a(v-if="day !== null" href="")
+										span.data__day {{ LOOKUP.DAY[day].slice(0,3) }}
+										span.data__date {{ (k+1)+(j*7)-(7-month[0].length) }}
 						template(v-else)
 							li(is="day", v-for="(day, k) in week", :key="[2019, (i+1), (j+1), (k+1)].join('-')")
-								span.data__day {{ LOOKUP.DAY[day].slice(0,3) }}
-								span.data__date {{ (k+1)+(j*7)-(7-month[0].length) }}
+								a(href="")
+									span.data__day {{ LOOKUP.DAY[day].slice(0,3) }}
+									span.data__date {{ (k+1)+(j*7)-(7-month[0].length) }}
 		//- REDUNDANT
 			dd
 				ol.list-unstyled
@@ -97,9 +100,29 @@ export default {
 			flex-wrap: wrap;
 		}
 
+		a {
+			display: block;
+			color: inherit;
+			width: 34px;
+			height: 34px;
+			padding: 5px;
+			transition: all 200ms;
+
+			//DEVNOTE: use psuedo element for border-radius to avoid conflict with :hover hotspot
+			border-radius: 50%;
+
+			&:hover,
+			&:focus {
+				background: rgba(236,0,140, 1);
+				color: white;
+				text-decoration: none;
+				transition: none;
+			}
+		}
+
 		.calendar__month {
 			flex-basis: auto;
-			width: 25%;
+			width: (100%/3);
 			padding-left: 20px;
 			padding-right: 20px;
 			margin-top: 0;

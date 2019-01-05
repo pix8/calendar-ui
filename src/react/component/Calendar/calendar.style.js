@@ -9,7 +9,7 @@ const StyledCalendar = styled.div`
 
 const StyledMonth = styled.dl`
 	flex-basis: auto;
-	width: 25%;
+	width: calc(100%/3);
 	padding-left: 20px;
 	padding-right: 20px;
 	margin-top: 0;

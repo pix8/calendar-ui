@@ -64,8 +64,13 @@ export default class Calendar extends Component {
 															[...Array(7-week.length).fill(null)].concat(week).map( (day, k, arr) => {
 																return (
 																	<li className="calendar__date" key={ k }>
-																		{ day !== null ? <span className="data__day">{ LOOKUP.DAY[day].slice(0,3) }</span> : null }
-																		{ day !== null ? <span className="data__date">{ (k+1)+(j*7)-(7-month[0].length) }</span> : null }
+																		{
+																			(day !== null) ?
+																				<a href="">
+																					<span className="data__day">{ LOOKUP.DAY[day].slice(0,3) }</span>
+																					<span className="data__date">{ (k+1)+(j*7)-(7-month[0].length) }</span>
+																				</a> : null
+																		}
 																	</li>
 																)
 															})
@@ -75,8 +80,13 @@ export default class Calendar extends Component {
 														week.concat([...Array(7-week.length).fill(null)]).map( (day, k, arr) => {
 															return (
 																<li className="calendar__date" key={ k }>
-																	{ day !== null ? <span className="data__day">{ LOOKUP.DAY[day].slice(0,3) }</span> : null}
-																	{ day !== null ? <span className="data__date">{ (k+1)+(j*7)-(7-month[0].length) }</span> : null }
+																	{
+																		(day !== null) ?
+																		<a href="">
+																			<span className="data__day">{ LOOKUP.DAY[day].slice(0,3) }</span>
+																			<span className="data__date">{ (k+1)+(j*7)-(7-month[0].length) }</span>
+																		</a> : null
+																	}
 																</li>
 															)
 														})
@@ -86,8 +96,10 @@ export default class Calendar extends Component {
 													week.map( (day, k, arr) => {
 														return (
 															<li className="calendar__date" key={ k }>
-																<span className="data__day">{ LOOKUP.DAY[day].slice(0,3) }</span>
-																<span className="data__date">{ (k+1)+(j*7)-(7-month[0].length) }</span>
+																<a href="">
+																	<span className="data__day">{ LOOKUP.DAY[day].slice(0,3) }</span>
+																	<span className="data__date">{ (k+1)+(j*7)-(7-month[0].length) }</span>
+																</a>
 															</li>
 														)
 													})
