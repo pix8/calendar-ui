@@ -3,6 +3,9 @@
 import React, { Component } from "react"
 import Calendar from "./component/Calendar/Calendar"
 
+import CalendarService from '@pix8/calendar'
+import Moment from "moment"
+
 
 //console.log("-- 0. REACT APP(root) initialised -- ");
 /*********************************************************************************************/
@@ -10,16 +13,16 @@ export default class App extends Component {
 
 	constructor() {
 		super();
+
+		this.calendar = new CalendarService();
 	}
 
 	render() {
 		return (
-			<div id="app-react">
+			<div>
 				<div id="pix8--calendar" className="ui__calendar">
 					<div className="outer-wrapper">
-						<h2>React Calendar 2019</h2>
-						
-						<Calendar epoch={ new Date().toISOString() } />
+						<Calendar />
 					</div>
 				</div>
 			</div>

@@ -27,6 +27,7 @@
     "@babel/runtime": "^7.1.5",
     "@pix8/calendar": "0.1.0-beta",
     "axios": "^0.18.0",
+    "moment": "^2.23.0",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",

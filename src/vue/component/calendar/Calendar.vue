@@ -111,8 +111,7 @@ export default {
 			//DEVNOTE: use psuedo element for border-radius to avoid conflict with :hover hotspot
 			border-radius: 50%;
 
-			&:hover,
-			&:focus {
+			&:hover {
 				background: rgba(236,0,140, 1);
 				color: white;
 				text-decoration: none;
