@@ -81,12 +81,11 @@ export default class Calendar extends Component {
 		this.getCalendarData(value);
 	}
 
-	setTarget(day, month, event) {
+	setTarget(year, month, day, event) {
 		event.preventDefault();
 
-		let target = [2019, month, day];
-
-		//console.log("you clicked :: ", event.target, " :: ", `2019 / ${month} / ${day}`);
+		let target = [year, month, day];
+		//console.log("you clicked :: ", event.target, " :: ", `${year} / ${month} / ${day}`);
 
 		this.setState({
 			target
@@ -133,7 +132,7 @@ export default class Calendar extends Component {
 																		<li className="calendar__date" key={ k }>
 																			{
 																				(day !== null) ?
-																					<a href="" onClick={ this.setTarget.bind(this, (k+1)+(j*7)-(7-month[0].length), i) }>
+																					<a href="" onClick={ this.setTarget.bind(this, 2019, i, (k+1)+(j*7)-(7-month[0].length)) }>
 																						<span className="data__day">{ LOOKUP.DAY[day].slice(0,3) }</span>
 																						<span className="data__date">{ (k+1)+(j*7)-(7-month[0].length) }</span>
 																					</a> : null
@@ -149,7 +148,7 @@ export default class Calendar extends Component {
 																	<li className="calendar__date" key={ k }>
 																		{
 																			(day !== null) ?
-																			<a href="" onClick={ this.setTarget.bind(this, (k+1)+(j*7)-(7-month[0].length), i) }>
+																			<a href="" onClick={ this.setTarget.bind(this, 2019, i, (k+1)+(j*7)-(7-month[0].length)) }>
 																				<span className="data__day">{ LOOKUP.DAY[day].slice(0,3) }</span>
 																				<span className="data__date">{ (k+1)+(j*7)-(7-month[0].length) }</span>
 																			</a> : null
@@ -163,7 +162,7 @@ export default class Calendar extends Component {
 														week.map( (day, k, arr) => {
 															return (
 																<li className="calendar__date" key={ k }>
-																	<a href="" onClick={ this.setTarget.bind(this, (k+1)+(j*7)-(7-month[0].length), i) }>
+																	<a href="" onClick={ this.setTarget.bind(this, 2019, i, (k+1)+(j*7)-(7-month[0].length)) }>
 																		<span className="data__day">{ LOOKUP.DAY[day].slice(0,3) }</span>
 																		<span className="data__date">{ (k+1)+(j*7)-(7-month[0].length) }</span>
 																	</a>

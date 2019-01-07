@@ -2,13 +2,7 @@
 	#app--vue
 		#pix8--calendar.ui__calendar
 			.outer-wrapper
-
-				div.navbar.navbar-default(style="border:none; borderRadius:0; background:whitesmoke;")
-					button.btn.btn-sm.btn-primary.navbar-btn(v-on:click="clickHandler('prev', $event)", style="display:inline-block;") &lt;
-					h2.navbar-brand( style="display:inline-block; margin: 0 20px;") Vue Calendar 2019
-					button.btn.btn-sm.btn-primary.navbar-btn(v-on:click="clickHandler('next', $event)", style="display:inline-block;") &gt;
-
-				calendar(:epoch="source" v-cloak)
+				calendar(v-cloak)
 </template>
 
 <script>
@@ -25,8 +19,6 @@ export default {
 
 	data() {
 		return {
-			source: new Date().toISOString(),
-			target: null
 		}
 	},
 
@@ -34,11 +26,7 @@ export default {
 
 	watch: {},
 
-	methods: {
-		clickHandler(foobar, event) {
-			console.log("vue :: ", foobar)
-		}
-	}
+	methods: {	}
 }
 </script>
 
