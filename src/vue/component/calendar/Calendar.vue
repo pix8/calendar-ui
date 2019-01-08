@@ -2,7 +2,8 @@
 	div
 		div.navbar.navbar-default(style="border:none; borderRadius:0; background:whitesmoke;")
 			button.btn.btn-sm.btn-primary.navbar-btn(v-on:click="decrementYear($event)", style="display:inline-block;") &lt;
-			h2.navbar-brand( style="display:inline-block; margin: 0 20px;") Vue Calendar 2019
+			h2.navbar-brand( style="display:inline-block; margin: 0 20px;") Vue Calendar 
+				span {{ everything.indexOf(apiCalendar) }}
 			button.btn.btn-sm.btn-primary.navbar-btn(v-on:click="incrementYear($event)", style="display:inline-block;") &gt;
 			p.navbar-brand(style="float:right; margin:0 20px;") Target date: {{ getTargetDate }}
 
@@ -16,18 +17,18 @@
 						template(v-for="(week, j) in month")
 							template(v-if="week.length < 7")
 								template(v-if="week[0] > 0")
-									li(is="day", v-for="(day, k) in [...Array(7-week.length).fill(null)].concat(week)", :key="[2019, (i+1), (j+1), (k+1)].join('-')")
-										a(v-if="day !== null", href="", v-on:click="setTarget($event, 2019, i, (k+1)+(j*7)-(7-month[0].length))")
+									li(is="day", v-for="(day, k) in [...Array(7-week.length).fill(null)].concat(week)", :key="[everything.indexOf(apiCalendar), (i+1), (j+1), (k+1)].join('-')")
+										a(v-if="day !== null", href="", v-on:click="setTarget($event, everything.indexOf(apiCalendar), i, (k+1)+(j*7)-(7-month[0].length))")
 											span.data__day {{ LOOKUP.DAY[day].slice(0,3) }}
 											span.data__date {{ (k+1)+(j*7)-(7-month[0].length) }}
 								template(v-else)
-									li(is="day", v-for="(day, k) in week.concat([...Array(7-week.length).fill(null)])", :key="[2019, (i+1), (j+1), (k+1)].join('-')")
-										a(v-if="day !== null", href="", v-on:click="setTarget($event, 2019, i, (k+1)+(j*7)-(7-month[0].length))")
+									li(is="day", v-for="(day, k) in week.concat([...Array(7-week.length).fill(null)])", :key="[everything.indexOf(apiCalendar), (i+1), (j+1), (k+1)].join('-')")
+										a(v-if="day !== null", href="", v-on:click="setTarget($event, everything.indexOf(apiCalendar), i, (k+1)+(j*7)-(7-month[0].length))")
 											span.data__day {{ LOOKUP.DAY[day].slice(0,3) }}
 											span.data__date {{ (k+1)+(j*7)-(7-month[0].length) }}
 							template(v-else)
-								li(is="day", v-for="(day, k) in week", :key="[2019, (i+1), (j+1), (k+1)].join('-')")
-									a(href="", v-on:click="setTarget($event, 2019, i, (k+1)+(j*7)-(7-month[0].length))")
+								li(is="day", v-for="(day, k) in week", :key="[everything.indexOf(apiCalendar), (i+1), (j+1), (k+1)].join('-')")
+									a(href="", v-on:click="setTarget($event, everything.indexOf(apiCalendar), i, (k+1)+(j*7)-(7-month[0].length))")
 										span.data__day {{ LOOKUP.DAY[day].slice(0,3) }}
 										span.data__date {{ (k+1)+(j*7)-(7-month[0].length) }}
 </template>
@@ -74,6 +75,7 @@ export default {
 			source: epoch,
 			target: epoch,
 			apiCalendar: [],
+			everything: [],
 			LOOKUP
 		}
 	},
@@ -94,8 +96,9 @@ export default {
 		getCalendarData(value) {
 			this.calendar.getYear(value)
 				.then( (data) => {
-					this.apiCalendar = data;
 					this.source = value;
+					this.apiCalendar = data[ Moment(value).format("Y") ];
+					this.everything = data;
 				});
 		},
 
