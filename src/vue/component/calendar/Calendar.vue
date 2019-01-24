@@ -102,32 +102,33 @@ export default {
 	div
 		navigation(@decrementYearEvent="decrementYear", @incrementYearEvent="incrementYear", :everything="everything", :apiCalendar="apiCalendar", :getTargetDate="getTargetDate")
 
-		.calendar
-			dl.calendar__month(v-for="(month, i) in apiCalendar", :index="i", :key="i")
+		.outer-wrapper
+			.calendar
+				dl.calendar__month(v-for="(month, i) in apiCalendar", :index="i", :key="i")
 
-				//- MONTH
-				dt {{ LOOKUP.MONTH[i] }}
+					//- MONTH
+					dt {{ LOOKUP.MONTH[i] }}
 
-				dd
-					header.month__header
-						p.header__day(v-for="(day, j) in LOOKUP.DAY", :key="j") {{ day.slice(0,3) }}
+					dd
+						header.month__header
+							p.header__day(v-for="(day, j) in LOOKUP.DAY", :key="j") {{ day.slice(0,3) }}
 
-					ol
-						template(v-for="(week, j) in month")
+						ol
+							template(v-for="(week, j) in month")
 
-							//- WEEK
-							template(v-if="week.length < 7")
-								template(v-if="week[0] > 0")
+								//- WEEK
+								template(v-if="week.length < 7")
+									template(v-if="week[0] > 0")
 
-									day(v-for="(day, k) in [...Array(7-week.length).fill(null)].concat(week)", :key="getKey(i, j, k)" @onSetTarget="setTarget", :day="day", :month="month", :i="i", :j="j", :k="k", :everything="everything", :apiCalendar="apiCalendar")
+										day(v-for="(day, k) in [...Array(7-week.length).fill(null)].concat(week)", :key="getKey(i, j, k)" @onSetTarget="setTarget", :day="day", :month="month", :i="i", :j="j", :k="k", :everything="everything", :apiCalendar="apiCalendar")
+
+									template(v-else)
+
+										day(v-for="(day, k) in week.concat([...Array(7-week.length).fill(null)])", :key="getKey(i, j, k)" @onSetTarget="setTarget", :day="day", :month="month", :i="i", :j="j", :k="k", :everything="everything", :apiCalendar="apiCalendar")
 
 								template(v-else)
 
-									day(v-for="(day, k) in week.concat([...Array(7-week.length).fill(null)])", :key="getKey(i, j, k)" @onSetTarget="setTarget", :day="day", :month="month", :i="i", :j="j", :k="k", :everything="everything", :apiCalendar="apiCalendar")
-
-							template(v-else)
-
-								day(v-for="(day, k) in week", :key="getKey(i, j, k)" @onSetTarget="setTarget", :day="day", :month="month", :i="i", :j="j", :k="k", :everything="everything", :apiCalendar="apiCalendar")
+									day(v-for="(day, k) in week", :key="getKey(i, j, k)" @onSetTarget="setTarget", :day="day", :month="month", :i="i", :j="j", :k="k", :everything="everything", :apiCalendar="apiCalendar")
 </template>
 
 <style lang="scss" scoped>

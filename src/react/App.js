@@ -21,9 +21,7 @@ export default class App extends Component {
 		return (
 			<div>
 				<div id="pix8--calendar" className="ui__calendar">
-					<div className="outer-wrapper">
-						<Calendar />
-					</div>
+					<Calendar />
 				</div>
 			</div>
 		)

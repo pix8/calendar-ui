@@ -141,6 +141,7 @@
 			display: flex;
 			justify-content: center;
 			flex-direction: column;
+			margin: 0 auto;
 		}
 	}
 
@@ -183,3 +184,74 @@
 		}
 	}
 }
+
+// CONFIGURATIONS
+/* =============================================================================
+	UI Calendar - horizontal monthly stack/reel
+	========================================================================== */
+/*.ui__calendar {
+	.outer-wrapper {
+		width: 100%;
+		overflow: auto;
+	}
+
+	.calendar {
+		flex-direction: row;
+		flex-wrap: nowrap;
+		transform: translate3d(0%, 0px, 0px);
+	}
+
+	dl,
+	.calendar__month {
+		width: auto;
+		flex-basis: 100%;
+		flex-shrink: 0;
+	}
+}*/
+
+/* =============================================================================
+	UI Calendar - horizontal weekly/daily stack/reel
+	========================================================================== */
+
+/* =============================================================================
+	UI Calendar - vertical monthly stack/reel
+	========================================================================== */
+/*.ui__calendar {
+	.outer-wrapper {
+		width: auto;
+		
+		height: 250px;
+		overflow: auto;
+	}
+
+	.calendar {
+		width: auto;
+
+		flex-direction: column;
+		flex-wrap: nowrap;
+		transform: translate3d(0%, 0px, 0px);
+	}
+
+	dl,
+	.calendar__month {
+		width: auto;
+		flex-basis: 100%;
+		flex-shrink: 0;
+
+		dt {
+			position: sticky;
+			top: 0;
+		}
+
+		.month__header {
+			// position: fixed;
+			// top: 0;
+			// left: 0;
+			// right: 0;
+		}
+	}
+}*/
+
+/* =============================================================================
+	UI Calendar - vertical weekly/daily stack/reel
+	========================================================================== */

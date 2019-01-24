@@ -108,36 +108,46 @@ export default class Calendar extends Component {
 
 				<Navigation incrementYear={ this.incrementYear.bind(this) } decrementYear={ this.decrementYear } everything={ this.state.everything } apiCalendar= { this.state.apiCalendar } target={ this.state.target }/>
 				
-				<StyledCalendar className="calendar">
-					{
-						this.state.apiCalendar.map((month, i, arr) => {
+				<div className="outer-wrapper">
+					<StyledCalendar className="calendar">
+						{
+							this.state.apiCalendar.map((month, i, arr) => {
 
-							return (
-								/* MONTH */
-								<StyledMonth className="calendar__month" key={ i }>
-									<dt>{ LOOKUP.MONTH[i] }</dt>
+								return (
+									/* MONTH */
+									<StyledMonth className="calendar__month" key={ i }>
+										<dt>{ LOOKUP.MONTH[i] }</dt>
 
-									<dd>
-										<header className="month__header">
-											{
-												LOOKUP.DAY.map((day, j, arr) => {
-													return (
-														<p className="header__day" key={ j }>{ day.slice(0,3) }</p>
-													)
-												})
-											}
-										</header>
+										<dd>
+											<header className="month__header">
+												{
+													LOOKUP.DAY.map((day, j, arr) => {
+														return (
+															<p className="header__day" key={ j }>{ day.slice(0,3) }</p>
+														)
+													})
+												}
+											</header>
 
-										<ol className="month__body">
-											{
-												month.map((week, j, arr) => {
+											<ol className="month__body">
+												{
+													month.map((week, j, arr) => {
 
-													/* WEEK */
-													if(week.length < 7) {
+														/* WEEK */
+														if(week.length < 7) {
 
-														if(week[0] > 0) {
+															if(week[0] > 0) {
+																return (
+																	[...Array(7-week.length).fill(null)].concat(week).map( (day, k, arr) => {
+
+																		return (
+																			<Day day={ day } month={ month } j={ j } k={ k } setTarget={ this.setTarget.bind(this, this.state.everything.indexOf(this.state.apiCalendar), i, (k+1)+(j*7)-(7-month[0].length)) } key={ this.getKey(i, j, k) } />
+																		)
+																	})
+																)
+															}
 															return (
-																[...Array(7-week.length).fill(null)].concat(week).map( (day, k, arr) => {
+																week.concat([...Array(7-week.length).fill(null)]).map( (day, k, arr) => {
 
 																	return (
 																		<Day day={ day } month={ month } j={ j } k={ k } setTarget={ this.setTarget.bind(this, this.state.everything.indexOf(this.state.apiCalendar), i, (k+1)+(j*7)-(7-month[0].length)) } key={ this.getKey(i, j, k) } />
@@ -146,35 +156,27 @@ export default class Calendar extends Component {
 															)
 														}
 														return (
-															week.concat([...Array(7-week.length).fill(null)]).map( (day, k, arr) => {
+															week.map( (day, k, arr) => {
 
 																return (
-																	<Day day={ day } month={ month } j={ j } k={ k } setTarget={ this.setTarget.bind(this, this.state.everything.indexOf(this.state.apiCalendar), i, (k+1)+(j*7)-(7-month[0].length)) } key={ this.getKey(i, j, k) } />
+																	<Day day={ day } month={ month } j={ j } k={ k } setTarget={ this.setTarget.bind(this, this.state.everything.indexOf(this.state.apiCalendar), i, (k+1)+(j*7)-(7-month[0].length)) } key={ this.getKey(i, j, k) } />																
 																)
+
+																/*return (
+																	li className="calendar__date" key={ [this.state.everything.indexOf(this.state.apiCalendar), (i+1), (j+1), k+1].join('-') }></li>
+																)*/
 															})
 														)
-													}
-													return (
-														week.map( (day, k, arr) => {
-
-															return (
-																<Day day={ day } month={ month } j={ j } k={ k } setTarget={ this.setTarget.bind(this, this.state.everything.indexOf(this.state.apiCalendar), i, (k+1)+(j*7)-(7-month[0].length)) } key={ this.getKey(i, j, k) } />																
-															)
-
-															/*return (
-																li className="calendar__date" key={ [this.state.everything.indexOf(this.state.apiCalendar), (i+1), (j+1), k+1].join('-') }></li>
-															)*/
-														})
-													)
-												})
-											}
-										</ol>
-									</dd>
-								</StyledMonth>
-							)
-						})
-					}
-				</StyledCalendar>
+													})
+												}
+											</ol>
+										</dd>
+									</StyledMonth>
+								)
+							})
+						}
+					</StyledCalendar>
+				</div>
 			</React.Fragment>
 		)
 	}

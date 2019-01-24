@@ -1,8 +1,7 @@
 <template lang="pug">
 	#app--vue
 		#pix8--calendar.ui__calendar
-			.outer-wrapper
-				calendar(v-cloak)
+			calendar(v-cloak)
 </template>
 
 <script>
