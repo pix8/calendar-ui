@@ -10,7 +10,7 @@ import {
 import Moment from 'moment'
 
 
-const Navigation = ({ decrementYear, incrementYear, apiCalendar, everything, target}) => {
+const Navigation = ({decrementYear, incrementYear, apiCalendar, everything, target}) => {
 
 	return (
 		<nav className="navbar navbar-default">

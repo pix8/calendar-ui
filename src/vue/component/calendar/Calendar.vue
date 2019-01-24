@@ -10,33 +10,22 @@
 				dt {{ LOOKUP.MONTH[i] }}
 
 				dd
-					ol.list-unstyled
+					ol
 						template(v-for="(week, j) in month")
 
 							//- WEEK
 							template(v-if="week.length < 7")
 								template(v-if="week[0] > 0")
 
-									//- DAY
-									li(is="day", v-for="(day, k) in [...Array(7-week.length).fill(null)].concat(week)", :key="[everything.indexOf(apiCalendar), (i+1), (j+1), (k+1)].join('-')")
-										a(v-if="day !== null", href="", v-on:click="setTarget($event, everything.indexOf(apiCalendar), i, (k+1)+(j*7)-(7-month[0].length))")
-											//- DEVNOTE: curious error being thrown if I move the isArray check to enforce non-leap vs leap days in Feb in the calendar into a method call, even though this block is entirely self-contained and unrelated
-											span.data__day {{ LOOKUP.DAY[day].slice(0,3) }}
-											span.data__date {{ (k+1)+(j*7)-(7-month[0].length) }}
+									day(v-for="(day, k) in [...Array(7-week.length).fill(null)].concat(week)", :key="[everything.indexOf(apiCalendar), (i+1), (j+1), (k+1)].join('-')" @onSetTarget="setTarget", :day="day", :month="month", :i="i", :j="j", :k="k", :everything="everything", :apiCalendar="apiCalendar")
+
 								template(v-else)
 
-									//- DAY
-									li(is="day", v-for="(day, k) in week.concat([...Array(7-week.length).fill(null)])", :key="[everything.indexOf(apiCalendar), (i+1), (j+1), (k+1)].join('-')")
-										a(v-if="day !== null", href="", v-on:click="setTarget($event, everything.indexOf(apiCalendar), i, (k+1)+(j*7)-(7-month[0].length))")
-											span.data__day {{ LOOKUP.DAY[day].slice(0,3) }}
-											span.data__date {{ (k+1)+(j*7)-(7-month[0].length) }}
+									day(v-for="(day, k) in week.concat([...Array(7-week.length).fill(null)])", :key="[everything.indexOf(apiCalendar), (i+1), (j+1), (k+1)].join('-')" @onSetTarget="setTarget", :day="day", :month="month", :i="i", :j="j", :k="k", :everything="everything", :apiCalendar="apiCalendar")
+
 							template(v-else)
 
-								//- DAY
-								li(is="day", v-for="(day, k) in week", :key="[everything.indexOf(apiCalendar), (i+1), (j+1), (k+1)].join('-')")
-									a(href="", v-on:click="setTarget($event, everything.indexOf(apiCalendar), i, (k+1)+(j*7)-(7-month[0].length))")
-										span.data__day {{ LOOKUP.DAY[day].slice(0,3) }}
-										span.data__date {{ (k+1)+(j*7)-(7-month[0].length) }}
+								day(v-for="(day, k) in week", :key="[everything.indexOf(apiCalendar), (i+1), (j+1), (k+1)].join('-')" @onSetTarget="setTarget", :day="day", :month="month", :i="i", :j="j", :k="k", :everything="everything", :apiCalendar="apiCalendar")
 </template>
 
 
@@ -136,55 +125,4 @@ export default {
 
 
 <style lang="scss" scoped>
-	.ui__calendar {
-		background: whitesmoke;
-
-		.calendar {
-			background: whitesmoke;
-			display: flex;
-			flex-wrap: wrap;
-		}
-
-		a {
-			display: block;
-			color: inherit;
-			width: 34px;
-			height: 34px;
-			padding: 5px;
-			transition: all 200ms;
-
-			//DEVNOTE: use psuedo element for border-radius to avoid conflict with :hover hotspot
-			border-radius: 50%;
-
-			&:hover {
-				background: rgba(236,0,140, 1);
-				color: white;
-				text-decoration: none;
-				transition: none;
-			}
-		}
-
-		.calendar__month {
-			flex-basis: auto;
-			width: (100%/3);
-			padding-left: 20px;
-			padding-right: 20px;
-			margin-top: 0;
-			margin-bottom: 0;
-
-			dt {
-				font-size: 14px;
-				font-weight: 700;
-			}
-
-			dd {
-				
-			}
-		}
-
-		ol {
-			display: flex;
-			flex-wrap: wrap;
-		}
-	}
 </style>

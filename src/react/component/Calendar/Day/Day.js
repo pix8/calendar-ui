@@ -1,27 +1,28 @@
 'use strict';
 
-import React, { Component } from "react"
-import './day.style.scss'
+import React from "react"
+import {} from './day.style'
 
 
-//console.log("-- Calendar > DAY component initialised -- ");
-/*********************************************************************************************/
-export default class Day extends Component {
-	
-	constructor() {
-		super();
-
-		this.daynames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-	}
-
-	render() {
-		return (
-			<li>
-				<a href="#">
-					<span>{ this.daynames[this.props.day].slice(0,3) }</span>
-					<span>{ this.props.date }</span>
-				</a>
-			</li>
-		)
-	}
+const LOOKUP = {
+	MONTH: "January,February,March,April,May,June,July,August,September,October,November,December".split(","),
+	DAY: "Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday".split(",")
 }
+
+const Day = ({day, month, j, k, setTarget}) => {
+
+	return (
+		<li className="calendar__date">
+			{
+				(day !== null) ?
+					<a href="" onClick={ setTarget }>
+						<span className="data__day">{ LOOKUP.DAY[day].slice(0,3) }</span>
+						<span className="data__date">{ (k+1)+(j*7)-(7-month[0].length) }</span>
+					</a>
+					: null
+			}
+		</li>
+	)
+}
+
+export default Day;

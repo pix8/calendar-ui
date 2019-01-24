@@ -1,68 +1,37 @@
 <template lang="pug">
 	li.calendar__date
-		slot
+		a(href="", v-if="day !== null", v-on:click="clickHandler($event, everything.indexOf(apiCalendar), i, (k+1)+(j*7)-(7-month[0].length))")
+			span.data__day {{ LOOKUP.DAY[day].slice(0,3) }}
+			span.data__date {{ (k+1)+(j*7)-(7-month[0].length) }}
 </template>
 
 
 <script>
 
+const LOOKUP = {
+	MONTH: "January,February,March,April,May,June,July,August,September,October,November,December".split(","),
+	DAY: "Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday".split(",")
+}
 
-//console.log("-- Calendar > DAY ui initialised -- ");
-/*********************************************************************************************/
 export default {
 	name: 'day',
 
-	components: {},
-
-	beforeCreate() {},
-
-	created() {},
-
-	mounted() {},
-
-	props: [],
+	props: ["day", "month", "i", "j", "k", "everything", "apiCalendar"],
 
 	data() {
 		return {
+			LOOKUP
 		}
 	},
 
-	computed: {},
-
-	methods: {}
+	methods: {
+		clickHandler(event, index, foo, bar) {
+			this.$emit("onSetTarget", event, index, foo, bar);
+		}
+	}
 }
 </script>
 
 
 <style lang="scss" scoped>
-	.calendar__date {
-		flex-basis: (100%/7);
-		margin: 0;
-		text-align: center;
-		font-size: 9px;
-
-		/*display: block;
-		float: left;
-		margin: 5px;
-
-		&:nth-child(8n) {
-			clear: left;
-		}*/
-
-		span {
-			display: block;
-		}
-
-		.data__date {
-			font-size: 125%;
-		}
-
-		.data__day {
-			font-weight: 300;
-		}
-
-		.data__day-index {
-			font-size: 40%;
-		}
-	}
 </style>
