@@ -70,19 +70,22 @@
 		}
 	}
 
-	ol {
+	ol,
+	.month__header,
+	.month__body {
 		@extend .list-unstyled;
 		display: flex;
 		flex-wrap: wrap;
 	}
 
 	li,
+	.header__day,
 	.calendar__date {
 		flex-basis: (100%/7);
 		min-width: (100%/7);
 		margin: 0;
 		text-align: center;
-		font-size: 9px;
+		font-size: 8px;
 
 		/*display: block;
 		float: left;
@@ -123,6 +126,21 @@
 
 		.data__day-index {
 			font-size: 40%;
+		}
+	}
+
+	.month__header {
+		background-color: rgb(102,102,102);
+		color: white;
+		margin: 10px 0 -10px;
+		padding: 5px 0;
+	}
+
+	.calendar__date {
+		a{
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
 		}
 	}
 

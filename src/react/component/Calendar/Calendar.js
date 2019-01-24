@@ -69,7 +69,7 @@ export default class Calendar extends Component {
 			})
 	}
 
-	setKey(i, j, k) {
+	getKey(i, j, k) {
 		return [this.state.everything.indexOf(this.state.apiCalendar), (i+1), (j+1), k+1].join('-');
 	}
 
@@ -118,7 +118,17 @@ export default class Calendar extends Component {
 									<dt>{ LOOKUP.MONTH[i] }</dt>
 
 									<dd>
-										<ol>
+										<header className="month__header">
+											{
+												LOOKUP.DAY.map((day, j, arr) => {
+													return (
+														<p className="header__day" key={ j }>{ day.slice(0,3) }</p>
+													)
+												})
+											}
+										</header>
+
+										<ol className="month__body">
 											{
 												month.map((week, j, arr) => {
 
@@ -130,7 +140,7 @@ export default class Calendar extends Component {
 																[...Array(7-week.length).fill(null)].concat(week).map( (day, k, arr) => {
 
 																	return (
-																		<Day day={ day } month={ month } j={ j } k={ k } setTarget={ this.setTarget.bind(this, this.state.everything.indexOf(this.state.apiCalendar), i, (k+1)+(j*7)-(7-month[0].length)) } key={ this.setKey(i, j, k) } />
+																		<Day day={ day } month={ month } j={ j } k={ k } setTarget={ this.setTarget.bind(this, this.state.everything.indexOf(this.state.apiCalendar), i, (k+1)+(j*7)-(7-month[0].length)) } key={ this.getKey(i, j, k) } />
 																	)
 																})
 															)
@@ -139,7 +149,7 @@ export default class Calendar extends Component {
 															week.concat([...Array(7-week.length).fill(null)]).map( (day, k, arr) => {
 
 																return (
-																	<Day day={ day } month={ month } j={ j } k={ k } setTarget={ this.setTarget.bind(this, this.state.everything.indexOf(this.state.apiCalendar), i, (k+1)+(j*7)-(7-month[0].length)) } key={ this.setKey(i, j, k) } />
+																	<Day day={ day } month={ month } j={ j } k={ k } setTarget={ this.setTarget.bind(this, this.state.everything.indexOf(this.state.apiCalendar), i, (k+1)+(j*7)-(7-month[0].length)) } key={ this.getKey(i, j, k) } />
 																)
 															})
 														)
@@ -148,7 +158,7 @@ export default class Calendar extends Component {
 														week.map( (day, k, arr) => {
 
 															return (
-																<Day day={ day } month={ month } j={ j } k={ k } setTarget={ this.setTarget.bind(this, this.state.everything.indexOf(this.state.apiCalendar), i, (k+1)+(j*7)-(7-month[0].length)) } key={ this.setKey(i, j, k) } />																
+																<Day day={ day } month={ month } j={ j } k={ k } setTarget={ this.setTarget.bind(this, this.state.everything.indexOf(this.state.apiCalendar), i, (k+1)+(j*7)-(7-month[0].length)) } key={ this.getKey(i, j, k) } />																
 															)
 
 															/*return (
