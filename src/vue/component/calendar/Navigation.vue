@@ -1,17 +1,6 @@
-<template lang="pug">
-	nav
-		button.btn.btn-primary(v-on:click="decrementYear($event)") &lt;
-		
-		h2.navbar-brand Vue Calendar&nbsp;
-			span {{ everything.indexOf(apiCalendar) }}
-		
-		button.btn.btn-primary(v-on:click="incrementYear($event)") &gt;
-		
-		p.navbar-brand Target date: {{ getTargetDate }}
-</template>
-
-
 <script>
+'use strict';
+
 export default {
 	name: 'navigation',
 
@@ -29,6 +18,17 @@ export default {
 }
 </script>
 
+<template lang="pug">
+	nav
+		button.btn.btn-primary(v-on:click="decrementYear($event)") &lt;
+		
+		h2 Vue Calendar&nbsp;
+			span {{ everything.indexOf(apiCalendar) }}
+		
+		button.btn.btn-primary(v-on:click="incrementYear($event)") &gt;
+		
+		p Target date: {{ getTargetDate }}
+</template>
 
 <style lang="scss" scoped>
 </style>

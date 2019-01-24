@@ -1,35 +1,5 @@
-<template lang="pug">
-	div
-		navigation(@decrementYearEvent="decrementYear", @incrementYearEvent="incrementYear", :everything="everything", :apiCalendar="apiCalendar", :getTargetDate="getTargetDate")
-
-		.calendar
-			//-dl.calendar__month(v-for="(month, i) in apiCalendar", :index="i", :key="i")
-			dl.calendar__month(v-for="(month, i) in render", :index="i", :key="i")
-
-				//- MONTH
-				dt {{ LOOKUP.MONTH[i] }}
-
-				dd
-					ol
-						template(v-for="(week, j) in month")
-
-							//- WEEK
-							template(v-if="week.length < 7")
-								template(v-if="week[0] > 0")
-
-									day(v-for="(day, k) in [...Array(7-week.length).fill(null)].concat(week)", :key="[everything.indexOf(apiCalendar), (i+1), (j+1), (k+1)].join('-')" @onSetTarget="setTarget", :day="day", :month="month", :i="i", :j="j", :k="k", :everything="everything", :apiCalendar="apiCalendar")
-
-								template(v-else)
-
-									day(v-for="(day, k) in week.concat([...Array(7-week.length).fill(null)])", :key="[everything.indexOf(apiCalendar), (i+1), (j+1), (k+1)].join('-')" @onSetTarget="setTarget", :day="day", :month="month", :i="i", :j="j", :k="k", :everything="everything", :apiCalendar="apiCalendar")
-
-							template(v-else)
-
-								day(v-for="(day, k) in week", :key="[everything.indexOf(apiCalendar), (i+1), (j+1), (k+1)].join('-')" @onSetTarget="setTarget", :day="day", :month="month", :i="i", :j="j", :k="k", :everything="everything", :apiCalendar="apiCalendar")
-</template>
-
-
 <script>
+'use strict';
 
 //import Month from './Month'
 import Day from './Day/Day'
@@ -37,6 +7,7 @@ import Navigation from './Navigation'
 
 import CalendarService from '@pix8/calendar'
 import Moment from "moment"
+
 
 const LOOKUP = {
 	MONTH: "January,February,March,April,May,June,July,August,September,October,November,December".split(","),
@@ -78,9 +49,9 @@ export default {
 	},
 
 	computed: {
-		render() {
+		/*render() {
 			return this.apiCalendar;
-		},
+		},*/
 
 		getTargetDate() {
 			return Moment(this.target).format("dddd, Do MMM Y");
@@ -97,6 +68,10 @@ export default {
 					this.apiCalendar = data[ Moment(value).format("Y") ];
 					this.everything = data;
 				});
+		},
+
+		setKey(i, j, k) {
+			return [this.everything.indexOf(this.apiCalendar), (i+1), (j+1), (k+1)].join('-');
 		},
 
 		incrementYear(event) {
@@ -123,6 +98,34 @@ export default {
 }
 </script>
 
+<template lang="pug">
+	div
+		navigation(@decrementYearEvent="decrementYear", @incrementYearEvent="incrementYear", :everything="everything", :apiCalendar="apiCalendar", :getTargetDate="getTargetDate")
+
+		.calendar
+			dl.calendar__month(v-for="(month, i) in apiCalendar", :index="i", :key="i")
+
+				//- MONTH
+				dt {{ LOOKUP.MONTH[i] }}
+
+				dd
+					ol
+						template(v-for="(week, j) in month")
+
+							//- WEEK
+							template(v-if="week.length < 7")
+								template(v-if="week[0] > 0")
+
+									day(v-for="(day, k) in [...Array(7-week.length).fill(null)].concat(week)", :key="setKey(i, j, k)" @onSetTarget="setTarget", :day="day", :month="month", :i="i", :j="j", :k="k", :everything="everything", :apiCalendar="apiCalendar")
+
+								template(v-else)
+
+									day(v-for="(day, k) in week.concat([...Array(7-week.length).fill(null)])", :key="setKey(i, j, k)" @onSetTarget="setTarget", :day="day", :month="month", :i="i", :j="j", :k="k", :everything="everything", :apiCalendar="apiCalendar")
+
+							template(v-else)
+
+								day(v-for="(day, k) in week", :key="setKey(i, j, k)" @onSetTarget="setTarget", :day="day", :month="month", :i="i", :j="j", :k="k", :everything="everything", :apiCalendar="apiCalendar")
+</template>
 
 <style lang="scss" scoped>
 </style>
