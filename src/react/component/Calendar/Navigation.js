@@ -13,17 +13,17 @@ import Moment from 'moment'
 const Navigation = ({decrementYear, incrementYear, apiCalendar, everything, target}) => {
 
 	return (
-		<nav className="navbar navbar-default">
-			<button className="btn btn-sm btn-primary navbar-btn" onClick={ decrementYear }>&lt;</button>
+		<nav>
+			<button className="btn btn-primary" onClick={ decrementYear }>&lt;</button>
 			
-			<h2 className="navbar-brand">
-				React Calendar 
+			<h2>
+				React Calendar&nbsp;
 				<span>{ everything.indexOf(apiCalendar) }</span>
 			</h2>
 			
-			<button className="btn btn-sm btn-primary navbar-btn" onClick={ incrementYear }>&gt;</button>
+			<button className="btn btn-primary" onClick={ incrementYear }>&gt;</button>
 
-			<p className="navbar-brand">Target date: { Moment(target).format("dddd, Do MMM Y") }</p>
+			<p>Target date: { Moment(target).format("dddd, Do MMM Y") }</p>
 		</nav>
 	)
 }

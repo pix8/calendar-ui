@@ -1,11 +1,11 @@
 <template lang="pug">
-	nav.navbar.navbar-default
-		button.btn.btn-sm.btn-primary.navbar-btn(v-on:click="decrementYear($event)") &lt;
+	nav
+		button.btn.btn-primary(v-on:click="decrementYear($event)") &lt;
 		
-		h2.navbar-brand Vue Calendar 
+		h2.navbar-brand Vue Calendar&nbsp;
 			span {{ everything.indexOf(apiCalendar) }}
 		
-		button.btn.btn-sm.btn-primary.navbar-btn(v-on:click="incrementYear($event)") &gt;
+		button.btn.btn-primary(v-on:click="incrementYear($event)") &gt;
 		
 		p.navbar-brand Target date: {{ getTargetDate }}
 </template>
