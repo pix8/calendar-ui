@@ -1,32 +1,38 @@
 <template lang="pug">
 	div
-		div.navbar.navbar-default(style="border:none; borderRadius:0; background:whitesmoke;")
-			button.btn.btn-sm.btn-primary.navbar-btn(v-on:click="decrementYear($event)", style="display:inline-block;") &lt;
-			h2.navbar-brand( style="display:inline-block; margin: 0 20px;") Vue Calendar 
-				span {{ everything.indexOf(apiCalendar) }}
-			button.btn.btn-sm.btn-primary.navbar-btn(v-on:click="incrementYear($event)", style="display:inline-block;") &gt;
-			p.navbar-brand(style="float:right; margin:0 20px;") Target date: {{ getTargetDate }}
+		navigation(@decrementYearEvent="decrementYear", @incrementYearEvent="incrementYear", :everything="everything", :apiCalendar="apiCalendar", :getTargetDate="getTargetDate")
 
 		.calendar
-			//-dl.calendar__month(v-for="(month, i) in render", :index="i", :key="i")
-			dl.calendar__month(v-for="(month, i) in apiCalendar", :index="i", :key="i")
+			//-dl.calendar__month(v-for="(month, i) in apiCalendar", :index="i", :key="i")
+			dl.calendar__month(v-for="(month, i) in render", :index="i", :key="i")
+
+				//- MONTH
 				dt {{ LOOKUP.MONTH[i] }}
 
 				dd
 					ol.list-unstyled
 						template(v-for="(week, j) in month")
+
+							//- WEEK
 							template(v-if="week.length < 7")
 								template(v-if="week[0] > 0")
+
+									//- DAY
 									li(is="day", v-for="(day, k) in [...Array(7-week.length).fill(null)].concat(week)", :key="[everything.indexOf(apiCalendar), (i+1), (j+1), (k+1)].join('-')")
 										a(v-if="day !== null", href="", v-on:click="setTarget($event, everything.indexOf(apiCalendar), i, (k+1)+(j*7)-(7-month[0].length))")
+											//- DEVNOTE: curious error being thrown if I move the isArray check to enforce non-leap vs leap days in Feb in the calendar into a method call, even though this block is entirely self-contained and unrelated
 											span.data__day {{ LOOKUP.DAY[day].slice(0,3) }}
 											span.data__date {{ (k+1)+(j*7)-(7-month[0].length) }}
 								template(v-else)
+
+									//- DAY
 									li(is="day", v-for="(day, k) in week.concat([...Array(7-week.length).fill(null)])", :key="[everything.indexOf(apiCalendar), (i+1), (j+1), (k+1)].join('-')")
 										a(v-if="day !== null", href="", v-on:click="setTarget($event, everything.indexOf(apiCalendar), i, (k+1)+(j*7)-(7-month[0].length))")
 											span.data__day {{ LOOKUP.DAY[day].slice(0,3) }}
 											span.data__date {{ (k+1)+(j*7)-(7-month[0].length) }}
 							template(v-else)
+
+								//- DAY
 								li(is="day", v-for="(day, k) in week", :key="[everything.indexOf(apiCalendar), (i+1), (j+1), (k+1)].join('-')")
 									a(href="", v-on:click="setTarget($event, everything.indexOf(apiCalendar), i, (k+1)+(j*7)-(7-month[0].length))")
 										span.data__day {{ LOOKUP.DAY[day].slice(0,3) }}
@@ -37,14 +43,15 @@
 <script>
 
 //import Month from './Month'
-import Day from './Day'
+import Day from './Day/Day'
+import Navigation from './Navigation'
 
 import CalendarService from '@pix8/calendar'
 import Moment from "moment"
 
 const LOOKUP = {
 	MONTH: "January,February,March,April,May,June,July,August,September,October,November,December".split(","),
-	DAY: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+	DAY: "Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday".split(",")
 }
 
 const epoch = new Date().toISOString();
@@ -55,7 +62,8 @@ export default {
 	name: 'calendar',
 
 	components: {
-		Day
+		Day,
+		Navigation
 	},
 
 	beforeCreate() {},
@@ -94,7 +102,7 @@ export default {
 
 	methods: {
 		getCalendarData(value) {
-			this.calendar.getYear(value)
+			this.calendar.getCalendarYear(value)
 				.then( (data) => {
 					this.source = value;
 					this.apiCalendar = data[ Moment(value).format("Y") ];

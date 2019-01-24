@@ -14,7 +14,7 @@
 	UI Calendar
 	========================================================================== */
 .ui__calendar {
-	//text-align: center;
+	/*//text-align: center;
 	padding: 0; // 15px;
 	position: relative;
 
@@ -228,6 +228,22 @@
 			//background-color: $theme__primary;
 			//color: $color__white;
 			outline: 4px solid orange;
+		}
+	}*/
+
+	nav.navbar { 
+		border:none; borderRadius:0; background:whitesmoke;
+
+		h2.navbar-brand {
+			display:inline-block; margin: 0 20px;
+		}
+
+		p.navbar-brand {
+			float:right; margin:0 20px;
+		}
+
+		.btn {
+			display:inline-block;
 		}
 	}
 }

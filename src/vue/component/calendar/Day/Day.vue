@@ -6,8 +6,6 @@
 
 <script>
 
-import Utils from '../../../js/pix8/pix8.Utils'
-
 
 //console.log("-- Calendar > DAY ui initialised -- ");
 /*********************************************************************************************/

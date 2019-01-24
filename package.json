@@ -5,7 +5,7 @@
   "author": "",
   "homepage": "",
   "keywords": [],
-  "license": "ISC",
+  "license": "BSD-3-Clause",
   "repository": {
     "type": "git",
     "url": "git@bitbucket.org:pix8/npm.calendar-ui.git"

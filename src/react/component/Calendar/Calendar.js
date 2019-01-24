@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import Month from './Month'
 import './calendar.style.scss'
 
+import Navigation from './Navigation'
 import { 
 	StyledCalendar,
 	StyledMonth,
@@ -13,12 +14,12 @@ import {
 } from './calendar.style'
 
 import CalendarService from '@pix8/calendar'
-import Moment from "moment"
+import Moment from 'moment'
 
 
 const LOOKUP = {
 	MONTH: "January,February,March,April,May,June,July,August,September,October,November,December".split(","),
-	DAY: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+	DAY: "Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday".split(",")
 }
 
 const epoch = new Date().toISOString();
@@ -54,7 +55,7 @@ export default class Calendar extends Component {
 	}
 
 	getCalendarData(value) {
-		this.calendar.getYear(value)
+		this.calendar.getCalendarYear(value)
 			.then( (data) => {
 				this.setState({
 					source: value,
@@ -65,6 +66,7 @@ export default class Calendar extends Component {
 	}
 
 	incrementYear(event) {
+		console.log(this);
 		const { source } = this.state;
 
 		let value = Moment(this.state.source).add(1, "years").toDate().toISOString();
@@ -74,6 +76,7 @@ export default class Calendar extends Component {
 	}
 
 	decrementYear = (event) => {
+		console.log(this);
 		const { source } = this.state;
 
 		let value = Moment(this.state.source).subtract(1, "years").toDate().toISOString();
@@ -99,26 +102,17 @@ export default class Calendar extends Component {
 	render() {
 		return (
 			<React.Fragment>
-				{/*<h3 style={ {width: '100%'} }>{ this.state.apiCalendar }</h3>*/}
-				
 
 				{ this.state.apiCalendar.length === 0 && <p>No calendar data</p> }
 
-				<nav className="navbar navbar-default" style={ {border:'none', borderRadius:'0', background:'whitesmoke'} }>
-					<button className="btn btn-sm btn-primary navbar-btn" onClick={ this.decrementYear } style={ {display:'inline-block'} }>&lt;</button>
-					<h2 className="navbar-brand" style={ {display: 'inline-block', margin: '0 20px'} }>
-						React Calendar 
-						<span>{ this.state.everything.indexOf(this.state.apiCalendar) }</span>
-					</h2>
-					<button className="btn btn-sm btn-primary navbar-btn" onClick={ this.incrementYear.bind(this) } style={ {display:'inline-block'} }>&gt;</button>
-					<p className="navbar-brand" style={ {float:'right', margin: '0 20px'} }>Target date: { Moment(this.state.target).format("dddd, Do MMM Y") }</p>
-				</nav>
+				<Navigation incrementYear={ this.incrementYear.bind(this) } decrementYear={ this.decrementYear } everything={ this.state.everything } apiCalendar= { this.state.apiCalendar } target={ this.state.target }/>
 				
 				<StyledCalendar className="calendar">
 					{
 						this.state.apiCalendar.map((month, i, arr) => {
 
 							return (
+								/* MONTH */
 								<StyledMonth className="calendar__month" key={ i }>
 									<dt>{ LOOKUP.MONTH[i] }</dt>
 
@@ -127,16 +121,20 @@ export default class Calendar extends Component {
 											{
 												month.map((week, j, arr) => {
 
+													/* WEEK */
 													if(week.length < 7) {
 
 														if(week[0] > 0) {
 															return (
 																[...Array(7-week.length).fill(null)].concat(week).map( (day, k, arr) => {
+
+																	/* DAY */
 																	return (
 																		<li className="calendar__date" key={ [this.state.everything.indexOf(this.state.apiCalendar), (i+1), (j+1), k+1].join('-') }>
 																			{
 																				(day !== null) ?
 																					<a href="" onClick={ this.setTarget.bind(this, this.state.everything.indexOf(this.state.apiCalendar), i, (k+1)+(j*7)-(7-month[0].length)) }>
+																						{/*curious error being thrown if I move the isArray check to enforce non-leap vs leap days in Feb in the calendar into a method call, even though this block is entirely self-contained and unrelated*/}
 																						<span className="data__day">{ LOOKUP.DAY[day].slice(0,3) }</span>
 																						<span className="data__date">{ (k+1)+(j*7)-(7-month[0].length) }</span>
 																					</a> : null
@@ -148,6 +146,8 @@ export default class Calendar extends Component {
 														}
 														return (
 															week.concat([...Array(7-week.length).fill(null)]).map( (day, k, arr) => {
+
+																/* DAY */
 																return (
 																	<li className="calendar__date" key={ [this.state.everything.indexOf(this.state.apiCalendar), (i+1), (j+1), k+1].join('-') }>
 																		{
@@ -164,6 +164,8 @@ export default class Calendar extends Component {
 													}
 													return (
 														week.map( (day, k, arr) => {
+
+															/* DAY */
 															return (
 																<li className="calendar__date" key={ [this.state.everything.indexOf(this.state.apiCalendar), (i+1), (j+1), k+1].join('-') }>
 																	<a href="" onClick={ this.setTarget.bind(this, this.state.everything.indexOf(this.state.apiCalendar), i, (k+1)+(j*7)-(7-month[0].length)) }>

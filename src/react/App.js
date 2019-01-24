@@ -3,7 +3,7 @@
 import React, { Component } from "react"
 import Calendar from "./component/Calendar/Calendar"
 
-import CalendarService from '@pix8/calendar'
+//import CalendarService from '@pix8/calendar'
 import Moment from "moment"
 
 
@@ -14,7 +14,7 @@ export default class App extends Component {
 	constructor() {
 		super();
 
-		this.calendar = new CalendarService();
+		//this.calendar = new CalendarService();
 	}
 
 	render() {
