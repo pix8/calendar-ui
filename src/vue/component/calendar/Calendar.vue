@@ -43,7 +43,6 @@ export default {
 			source: epoch,
 			target: epoch,
 			apiCalendar: [],
-			everything: [],
 			LOOKUP
 		}
 	},
@@ -55,6 +54,10 @@ export default {
 
 		getTargetDate() {
 			return Moment(this.target).format("dddd, Do MMM Y");
+		},
+
+		getYear() {
+			return ~~Moment(this.source).format('Y');
 		}
 	},
 
@@ -65,13 +68,13 @@ export default {
 			this.calendar.getCalendarYear(value)
 				.then( (data) => {
 					this.source = value;
-					this.apiCalendar = data[ Moment(value).format("Y") ];
-					this.everything = data;
+					//this.apiCalendar = data[ Moment(value).format("Y") ];
+					this.apiCalendar = data;
 				});
 		},
 
 		getKey(i, j, k) {
-			return [this.everything.indexOf(this.apiCalendar), (i+1), (j+1), (k+1)].join('-');
+			return [~~Moment(this.source).format('Y'), (i+1), (j+1), (k+1)].join('-');
 		},
 
 		incrementYear(event) {
@@ -100,11 +103,11 @@ export default {
 
 <template lang="pug">
 	div
-		navigation(@decrementYearEvent="decrementYear", @incrementYearEvent="incrementYear", :everything="everything", :apiCalendar="apiCalendar", :getTargetDate="getTargetDate")
+		navigation(@decrementYearEvent="decrementYear", @incrementYearEvent="incrementYear", :year="getYear", :getTargetDate="getTargetDate", :apiCalendar="apiCalendar")
 
 		.outer-wrapper
 			.calendar
-				dl.calendar__month(v-for="(month, i) in apiCalendar", :index="i", :key="i")
+				dl.calendar__month(v-for="(month, i) in apiCalendar[ getYear ]", :index="i", :key="i")
 
 					//- MONTH
 					dt {{ LOOKUP.MONTH[i] }}
@@ -120,15 +123,15 @@ export default {
 								template(v-if="week.length < 7")
 									template(v-if="week[0] > 0")
 
-										day(v-for="(day, k) in [...Array(7-week.length).fill(null)].concat(week)", :key="getKey(i, j, k)" @onSetTarget="setTarget", :day="day", :month="month", :i="i", :j="j", :k="k", :everything="everything", :apiCalendar="apiCalendar")
+										day(v-for="(day, k) in [...Array(7-week.length).fill(null)].concat(week)", :key="getKey(i, j, k)" @onSetTarget="setTarget", :day="day", :month="month", :i="i", :j="j", :k="k", :year="getYear", :apiCalendar="apiCalendar")
 
 									template(v-else)
 
-										day(v-for="(day, k) in week.concat([...Array(7-week.length).fill(null)])", :key="getKey(i, j, k)" @onSetTarget="setTarget", :day="day", :month="month", :i="i", :j="j", :k="k", :everything="everything", :apiCalendar="apiCalendar")
+										day(v-for="(day, k) in week.concat([...Array(7-week.length).fill(null)])", :key="getKey(i, j, k)" @onSetTarget="setTarget", :day="day", :month="month", :i="i", :j="j", :k="k", :year="getYear", :apiCalendar="apiCalendar")
 
 								template(v-else)
 
-									day(v-for="(day, k) in week", :key="getKey(i, j, k)" @onSetTarget="setTarget", :day="day", :month="month", :i="i", :j="j", :k="k", :everything="everything", :apiCalendar="apiCalendar")
+									day(v-for="(day, k) in week", :key="getKey(i, j, k)" @onSetTarget="setTarget", :day="day", :month="month", :i="i", :j="j", :k="k", :year="getYear", :apiCalendar="apiCalendar")
 </template>
 
 <style lang="scss" scoped>

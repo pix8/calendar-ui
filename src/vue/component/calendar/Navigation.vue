@@ -4,7 +4,7 @@
 export default {
 	name: 'navigation',
 
-	props: ["everything", "apiCalendar", "getTargetDate"],
+	props: ["year", "apiCalendar", "getTargetDate"],
 
 	methods: {
 		decrementYear(event){
@@ -23,7 +23,7 @@ export default {
 		button.btn.btn-primary(v-on:click="decrementYear($event)") &lt;
 		
 		h2 Vue Calendar&nbsp;
-			span {{ everything.indexOf(apiCalendar) }}
+			span {{ year }}
 		
 		button.btn.btn-primary(v-on:click="incrementYear($event)") &gt;
 		

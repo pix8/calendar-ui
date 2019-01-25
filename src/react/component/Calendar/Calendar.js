@@ -3,6 +3,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
+
 //import Month from './Month'
 import Day from './Day'
 import Navigation from './Navigation'
@@ -44,8 +45,7 @@ export default class Calendar extends Component {
 	state = {
 		source: epoch,
 		target: epoch,
-		apiCalendar: [],
-		everything: []
+		apiCalendar: []
 	}
 
 	constructor() {
@@ -63,29 +63,27 @@ export default class Calendar extends Component {
 			.then( (data) => {
 				this.setState({
 					source: value,
-					apiCalendar: data[ Moment(value).format("Y") ],
-					everything: data
+					apiCalendar: data
 				});
 			})
 	}
 
 	getKey(i, j, k) {
-		return [this.state.everything.indexOf(this.state.apiCalendar), (i+1), (j+1), k+1].join('-');
+		return [~~Moment(this.state.source).format("Y"), (i+1), (j+1), k+1].join('-');
 	}
 
 	incrementYear(event) {
 		const { source } = this.state;
 
-		let value = Moment(this.state.source).add(1, "years").toDate().toISOString();
+		let value = Moment(source).add(1, "years").toDate().toISOString();
 
 		this.getCalendarData(value);
-		
 	}
 
 	decrementYear = (event) => {
 		const { source } = this.state;
 
-		let value = Moment(this.state.source).subtract(1, "years").toDate().toISOString();
+		let value = Moment(source).subtract(1, "years").toDate().toISOString();
 
 		this.getCalendarData(value);
 	}
@@ -106,12 +104,12 @@ export default class Calendar extends Component {
 			<React.Fragment>
 				{ this.state.apiCalendar.length === 0 && <p>No calendar data</p> }
 
-				<Navigation incrementYear={ this.incrementYear.bind(this) } decrementYear={ this.decrementYear } everything={ this.state.everything } apiCalendar= { this.state.apiCalendar } target={ this.state.target }/>
+				<Navigation incrementYear={ this.incrementYear.bind(this) } decrementYear={ this.decrementYear } source={ this.state.source } target={ this.state.target } apiCalendar= { this.state.apiCalendar }/>
 				
 				<div className="outer-wrapper">
 					<StyledCalendar className="calendar">
 						{
-							this.state.apiCalendar.map((month, i, arr) => {
+							this.state.apiCalendar[ Moment(this.state.source).format("Y") ] && this.state.apiCalendar[ Moment(this.state.source).format("Y") ].map((month, i, arr) => {
 
 								return (
 									/* MONTH */
@@ -141,7 +139,7 @@ export default class Calendar extends Component {
 																	[...Array(7-week.length).fill(null)].concat(week).map( (day, k, arr) => {
 
 																		return (
-																			<Day day={ day } month={ month } j={ j } k={ k } setTarget={ this.setTarget.bind(this, this.state.everything.indexOf(this.state.apiCalendar), i, (k+1)+(j*7)-(7-month[0].length)) } key={ this.getKey(i, j, k) } />
+																			<Day day={ day } month={ month } j={ j } k={ k } setTarget={ this.setTarget.bind(this, ~~Moment(this.state.source).format("Y"), i, (k+1)+(j*7)-(7-month[0].length)) } key={ this.getKey(i, j, k) } />
 																		)
 																	})
 																)
@@ -150,7 +148,7 @@ export default class Calendar extends Component {
 																week.concat([...Array(7-week.length).fill(null)]).map( (day, k, arr) => {
 
 																	return (
-																		<Day day={ day } month={ month } j={ j } k={ k } setTarget={ this.setTarget.bind(this, this.state.everything.indexOf(this.state.apiCalendar), i, (k+1)+(j*7)-(7-month[0].length)) } key={ this.getKey(i, j, k) } />
+																		<Day day={ day } month={ month } j={ j } k={ k } setTarget={ this.setTarget.bind(this, ~~Moment(this.state.source).format("Y"), i, (k+1)+(j*7)-(7-month[0].length)) } key={ this.getKey(i, j, k) } />
 																	)
 																})
 															)
@@ -159,12 +157,8 @@ export default class Calendar extends Component {
 															week.map( (day, k, arr) => {
 
 																return (
-																	<Day day={ day } month={ month } j={ j } k={ k } setTarget={ this.setTarget.bind(this, this.state.everything.indexOf(this.state.apiCalendar), i, (k+1)+(j*7)-(7-month[0].length)) } key={ this.getKey(i, j, k) } />																
+																	<Day day={ day } month={ month } j={ j } k={ k } setTarget={ this.setTarget.bind(this, ~~Moment(this.state.source).format("Y"), i, (k+1)+(j*7)-(7-month[0].length)) } key={ this.getKey(i, j, k) } />																
 																)
-
-																/*return (
-																	li className="calendar__date" key={ [this.state.everything.indexOf(this.state.apiCalendar), (i+1), (j+1), k+1].join('-') }></li>
-																)*/
 															})
 														)
 													})

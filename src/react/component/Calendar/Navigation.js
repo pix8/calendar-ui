@@ -10,7 +10,7 @@ import {
 import Moment from 'moment'
 
 
-const Navigation = ({decrementYear, incrementYear, apiCalendar, everything, target}) => {
+const Navigation = ({decrementYear, incrementYear, apiCalendar, source, target}) => {
 
 	return (
 		<nav>
@@ -18,7 +18,7 @@ const Navigation = ({decrementYear, incrementYear, apiCalendar, everything, targ
 			
 			<h2>
 				React Calendar&nbsp;
-				<span>{ everything.indexOf(apiCalendar) }</span>
+				<span>{ Moment(source).format("Y") }</span>
 			</h2>
 			
 			<button className="btn btn-primary" onClick={ incrementYear }>&gt;</button>
